@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+<script>
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    if (changeInfo.status == 'complete') {
+        // here we could look at tab.url to only run on IGN urls
+        // this would also allow different translator to be used
+        chrome.tabs.executeScript(tabId, {file: "ign.js"});
+        chrome.tabs.executeScript(tabId, {file: "payload.js"});
+    }
+});
+
+// request is received only when the Zotero translator calls item.complete()
+chrome.extension.onRequest.addListener(function(msg, sender, sendResponse) {
+    var authors = '';
+    if (msg.creators.length == 1) {
+        authors = '|last='+msg.creators[0].lastName + 
+                  '|first='+msg.creators[0].firstName;
+    } else if (msg.creators.length > 1) {
+        for (var i = 0; i < msg.creators.length; i++) {
+            authors += '|last'+i+'='+msg.creators[i].lastName +
+                       '|first'+i+'='+msg.creators[i].firstName;
+        }
+    }
+    // fix:
+    // using localStorage is NOT the proper way to send messages back to a popup
+    localStorage['citation'] = '{{cite web|title='+msg.title+'|url='+msg.url+
+        '|date='+msg.date+authors+'}}';
+    chrome.pageAction.show(sender.tab.id);
+});
+</script>
+</head>
+</html>

@@ -1,0 +1,9 @@
+Copyright (C) 2010 odie5533
+
+Unless otherwise noted, all files are released under the
+GNU General Public License v3 or (at your option), any later version.
+The terms of the license are found in gpl-3.0.txt
+
+Variscite Smithsonian.jpg is courtesy of Jstuby from the English Wikipedia.
+Jstuby has been kind enough to release the image into the public domain.
+<http://en.wikipedia.org/wiki/File:Variscite_Smithsonian.jpg>
